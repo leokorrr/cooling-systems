@@ -1,5 +1,4 @@
 import { FormFieldType } from '@/types'
-import React from 'react'
 
 export const FormField: React.FC<FormFieldType> = ({ label, name }) => {
   return (
