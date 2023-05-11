@@ -1,5 +1,14 @@
+'use client'
+
 import { FormFieldType } from '@/types'
 import { FormField } from './FormField'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+
+interface Inputs {
+  title: string
+  description: string
+  price: number
+}
 
 const FORM_FIELDS: FormFieldType[] = [
   {
@@ -17,15 +26,24 @@ const FORM_FIELDS: FormFieldType[] = [
 ]
 
 export const Form: React.FC = () => {
+  const methods = useForm<Inputs>()
+
+  const { handleSubmit } = methods
+
+  const onSubmit: SubmitHandler<Inputs> = (data: any) => console.log(data)
+
   return (
-    <form>
-      {FORM_FIELDS.map((formField: FormFieldType) => (
-        <FormField
-          key={formField.name}
-          label={formField.label}
-          name={formField.name}
-        />
-      ))}
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {FORM_FIELDS.map((formField: FormFieldType) => (
+          <FormField
+            key={formField.name}
+            label={formField.label}
+            name={formField.name}
+          />
+        ))}
+        <button type='submit'>Submit</button>
+      </form>
+    </FormProvider>
   )
 }
