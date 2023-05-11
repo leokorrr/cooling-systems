@@ -3,6 +3,8 @@
 import { FormFieldType } from '@/types'
 import { FormField } from './FormField'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface Inputs {
   title: string
@@ -13,20 +15,33 @@ interface Inputs {
 const FORM_FIELDS: FormFieldType[] = [
   {
     label: 'Title:',
-    name: 'title'
+    name: 'title',
+    type: 'text'
   },
   {
     label: 'Description:',
-    name: 'description'
+    name: 'description',
+    type: 'text'
   },
   {
     label: 'Price:',
-    name: 'price'
+    name: 'price',
+    type: 'number'
   }
 ]
 
+const formSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Description is required'),
+  price: z
+    .number({ invalid_type_error: 'Price is required' })
+    .positive('Price should be positive')
+})
+
 export const Form: React.FC = () => {
-  const methods = useForm<Inputs>()
+  const methods = useForm<Inputs>({
+    resolver: zodResolver(formSchema)
+  })
 
   const { handleSubmit } = methods
 
@@ -40,6 +55,7 @@ export const Form: React.FC = () => {
             key={formField.name}
             label={formField.label}
             name={formField.name}
+            type={formField.type}
           />
         ))}
         <button type='submit'>Submit</button>
