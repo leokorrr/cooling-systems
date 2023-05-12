@@ -11,7 +11,13 @@ const storageItemBodySchema = z.object({
 
 export async function GET() {
   try {
-    const storageItems: StorageItem[] = await prisma.storageItem.findMany()
+    const storageItems: StorageItem[] = await prisma.storageItem.findMany({
+      orderBy: [
+        {
+          id: 'desc'
+        }
+      ]
+    })
 
     return NextResponse.json(storageItems)
   } catch (error) {
