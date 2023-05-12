@@ -22,11 +22,11 @@ export default function Home() {
 
   return (
     <main className='flex flex-col w-full justify-center mt-5'>
-      <div className='flex w-full max-w-[1720px]'>
-        <div className='w-[50%] flex justify-center'>
+      <div className='flex w-full max-w-[1720px] flex-col-reverse md:flex-row'>
+        <div className='md:w-[50%] w-full flex justify-center'>
           <StorageItemsList />
         </div>
-        <div className='w-[50%] flex justify-center'>
+        <div className='md:w-[50%] md:mb-0 mb-5 w-full flex justify-center'>
           <Form />
         </div>
       </div>
