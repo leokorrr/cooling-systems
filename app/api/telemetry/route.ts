@@ -65,10 +65,10 @@ export async function POST(req: Request) {
 
   if (!session) {
     return NextResponse.json(
-      JSON.stringify({
+      {
         message: 'Error: You are not logged in',
         status: 'fail'
-      }),
+      },
       { status: 401 }
     )
   }
