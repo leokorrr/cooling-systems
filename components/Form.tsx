@@ -5,9 +5,10 @@ import { FormField } from './FormField'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FORM_FIELDS } from '@/utils/constants'
+import { FORM_FIELDS, TELEMETRY_ENDPOINT } from '@/utils/constants'
 import { swrFetcher } from '@/utils/swrFetcher'
 import { useEffect, useState } from 'react'
+import { mutate } from 'swr'
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -31,7 +32,7 @@ export const Form: React.FC = () => {
   ) => {
     setIsSubmitError(false)
 
-    const res = await swrFetcher('/api/telemetry', {
+    const res = await swrFetcher(TELEMETRY_ENDPOINT, {
       method: 'POST',
       body: JSON.stringify(data)
     })
@@ -43,6 +44,7 @@ export const Form: React.FC = () => {
 
   useEffect(() => {
     if (formState.isSubmitSuccessful && !isSubmitError) {
+      mutate(TELEMETRY_ENDPOINT)
       reset()
     }
   }, [reset, formState, isSubmitError])

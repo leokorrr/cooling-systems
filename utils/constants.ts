@@ -20,3 +20,5 @@ export const FORM_FIELDS: FormFieldType[] = [
     placeholder: 'Provide item price...'
   }
 ]
+
+export const TELEMETRY_ENDPOINT = '/api/telemetry'
