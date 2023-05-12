@@ -1,37 +1,11 @@
 'use client'
 
-import { FormFieldType } from '@/types'
+import { FormFieldType, StorageItemOmitId } from '@/types'
 import { FormField } from './FormField'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-interface Inputs {
-  title: string
-  description: string
-  price: number
-}
-
-const FORM_FIELDS: FormFieldType[] = [
-  {
-    label: 'Title:',
-    name: 'title',
-    type: 'text',
-    placeholder: 'Provide item title...'
-  },
-  {
-    label: 'Description:',
-    name: 'description',
-    type: 'text',
-    placeholder: 'Provide item description...'
-  },
-  {
-    label: 'Price:',
-    name: 'price',
-    type: 'number',
-    placeholder: 'Provide item price...'
-  }
-]
+import { FORM_FIELDS } from '@/utils/constants'
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -42,11 +16,14 @@ const formSchema = z.object({
 })
 
 export const Form: React.FC = () => {
-  const methods = useForm<Inputs>({ resolver: zodResolver(formSchema) })
+  const methods = useForm<StorageItemOmitId>({
+    resolver: zodResolver(formSchema)
+  })
 
   const { handleSubmit } = methods
 
-  const onSubmit: SubmitHandler<Inputs> = (data: any) => console.log(data)
+  const onSubmit: SubmitHandler<StorageItemOmitId> = (data: any) =>
+    console.log(data)
 
   return (
     <FormProvider {...methods}>
