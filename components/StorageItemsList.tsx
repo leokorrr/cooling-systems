@@ -25,8 +25,8 @@ export const StorageItemsList: React.FC = () => {
   }
 
   return (
-    <div className='max-w-[760px] flex flex-col gap-3 px-4'>
-      {storageItems.map((storageItem: StorageItemType) => (
+    <div className='max-w-[760px] w-full flex flex-col gap-3 px-4'>
+      {storageItems.reverse().map((storageItem: StorageItemType) => (
         <StorageItem
           key={storageItem.id}
           title={storageItem.title}

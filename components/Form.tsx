@@ -49,7 +49,7 @@ export const Form: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className='max-w-[760px] px-4'>
+      <form onSubmit={handleSubmit(onSubmit)} className='max-w-[760px] px-4 w-full'>
         {isSubmitError ? (
           <div className='text-red-500 mb-4'>
             Something went wrong during form submission. Reload and try again
