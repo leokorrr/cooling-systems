@@ -19,14 +19,14 @@ export async function GET() {
     session = await getServerSession(authOptions)
   } catch (error) {
     return NextResponse.json(
-      { message: 'Error: Something went wrong' },
+      { message: 'Error: Something went wrong', status: 'fail' },
       { status: 500 }
     )
   }
 
   if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: 'Error: You are not logged in' }),
+    return NextResponse.json(
+      { message: 'Error: You are not logged in', status: 'fail' },
       { status: 401 }
     )
   }
@@ -44,7 +44,7 @@ export async function GET() {
     return NextResponse.json(storageItems)
   } catch (error) {
     return NextResponse.json(
-      { message: 'Error: Getting storage items' },
+      { message: 'Error: Getting storage items', status: 'fail' },
       { status: 500 }
     )
   }
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
   }
 
   if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: 'Error: You are not logged in' }),
+    return NextResponse.json(
+      JSON.stringify({ message: 'Error: You are not logged in', status: 'fail' }),
       { status: 401 }
     )
   }
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     data = await req.json()
   } catch (error) {
     return NextResponse.json(
-      { message: 'Error: Something went wrong' },
+      { message: 'Error: Something went wrong', status: 'fail' },
       { status: 500 }
     )
   }
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
   const validationResult = storageItemBodySchema.safeParse(data)
 
   if (!validationResult.success) {
-    return NextResponse.json({ message: 'Error: Bad payload' }, { status: 400 })
+    return NextResponse.json({ message: 'Error: Bad payload', status: 'fail' }, { status: 400 })
   }
 
   // Add data to Database
@@ -98,7 +98,7 @@ export async function POST(req: Request) {
     return NextResponse.json(newStorageItem)
   } catch (error) {
     return NextResponse.json(
-      { message: 'Error: Adding new storage item' },
+      { message: 'Error: Adding new storage item', status: 'fail' },
       { status: 500 }
     )
   }

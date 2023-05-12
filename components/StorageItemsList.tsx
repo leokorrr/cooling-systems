@@ -13,7 +13,7 @@ export const StorageItemsList: React.FC = () => {
     return <div className='text-white max-w-[760px] w-full'>Loading...</div>
   }
 
-  if (error) {
+  if (error || storageItems?.status === 'fail') {
     return (
       <div className='text-red-500'>
         Something went wrong during loading data. Reload and try again

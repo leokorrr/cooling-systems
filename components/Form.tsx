@@ -37,7 +37,7 @@ export const Form: React.FC = () => {
       body: JSON.stringify(data)
     })
 
-    if (res?.message) {
+    if (res?.status === 'fail') {
       setIsSubmitError(true)
     }
   }
