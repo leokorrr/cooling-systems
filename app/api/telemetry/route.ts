@@ -41,7 +41,7 @@ export async function GET() {
       ]
     })
 
-    return NextResponse.json(storageItems)
+    return NextResponse.json({ data: storageItems, status: 'success' })
   } catch (error) {
     return NextResponse.json(
       { message: 'Error: Getting storage items', status: 'fail' },
@@ -65,7 +65,10 @@ export async function POST(req: Request) {
 
   if (!session) {
     return NextResponse.json(
-      JSON.stringify({ message: 'Error: You are not logged in', status: 'fail' }),
+      JSON.stringify({
+        message: 'Error: You are not logged in',
+        status: 'fail'
+      }),
       { status: 401 }
     )
   }
@@ -86,7 +89,10 @@ export async function POST(req: Request) {
   const validationResult = storageItemBodySchema.safeParse(data)
 
   if (!validationResult.success) {
-    return NextResponse.json({ message: 'Error: Bad payload', status: 'fail' }, { status: 400 })
+    return NextResponse.json(
+      { message: 'Error: Bad payload', status: 'fail' },
+      { status: 400 }
+    )
   }
 
   // Add data to Database
@@ -95,7 +101,7 @@ export async function POST(req: Request) {
       data
     })
 
-    return NextResponse.json(newStorageItem)
+    return NextResponse.json({ data: newStorageItem, status: 'success' })
   } catch (error) {
     return NextResponse.json(
       { message: 'Error: Adding new storage item', status: 'fail' },

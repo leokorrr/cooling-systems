@@ -7,13 +7,13 @@ import { swrFetcher } from '@/utils/swrFetcher'
 import { TELEMETRY_ENDPOINT } from '@/utils/constants'
 
 export const StorageItemsList: React.FC = () => {
-  const { data: storageItems, error, isLoading } = useSWR(TELEMETRY_ENDPOINT, swrFetcher)
+  const { data: res, error, isLoading } = useSWR(TELEMETRY_ENDPOINT, swrFetcher)
 
   if (isLoading) {
     return <div className='text-white max-w-[760px] w-full'>Loading...</div>
   }
 
-  if (error || storageItems?.status === 'fail') {
+  if (error || res?.status === 'fail') {
     return (
       <div className='text-red-500'>
         Something went wrong during loading data. Reload and try again
@@ -21,13 +21,13 @@ export const StorageItemsList: React.FC = () => {
     )
   }
 
-  if (storageItems.length === 0) {
+  if (res.data.length === 0) {
     return <div className='text-white max-w-[760px] w-full'>No data</div>
   }
 
   return (
     <div className='max-w-[760px] w-full flex flex-col gap-3 px-4'>
-      {storageItems.map((storageItem: StorageItemType) => (
+      {res.data.map((storageItem: StorageItemType) => (
         <StorageItem
           key={storageItem.id}
           title={storageItem.title}
