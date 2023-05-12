@@ -16,17 +16,20 @@ const FORM_FIELDS: FormFieldType[] = [
   {
     label: 'Title:',
     name: 'title',
-    type: 'text'
+    type: 'text',
+    placeholder: 'Provide item title...'
   },
   {
     label: 'Description:',
     name: 'description',
-    type: 'text'
+    type: 'text',
+    placeholder: 'Provide item description...'
   },
   {
     label: 'Price:',
     name: 'price',
-    type: 'number'
+    type: 'number',
+    placeholder: 'Provide item price...'
   }
 ]
 
@@ -39,9 +42,7 @@ const formSchema = z.object({
 })
 
 export const Form: React.FC = () => {
-  const methods = useForm<Inputs>({
-    resolver: zodResolver(formSchema)
-  })
+  const methods = useForm<Inputs>({ resolver: zodResolver(formSchema) })
 
   const { handleSubmit } = methods
 
@@ -49,16 +50,24 @@ export const Form: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className='max-w-[760px] px-4'>
         {FORM_FIELDS.map((formField: FormFieldType) => (
           <FormField
             key={formField.name}
             label={formField.label}
             name={formField.name}
             type={formField.type}
+            placeholder={formField.placeholder}
           />
         ))}
-        <button type='submit'>Submit</button>
+        <div className='flex flex-row-reverse'>
+          <button
+            type='submit'
+            className='h-10 bg-black text-white w-[100px] rounded bg-blue-400'
+          >
+            Add
+          </button>
+        </div>
       </form>
     </FormProvider>
   )

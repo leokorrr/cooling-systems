@@ -3,7 +3,12 @@
 import { FormFieldType } from '@/types'
 import { useFormContext } from 'react-hook-form'
 
-export const FormField: React.FC<FormFieldType> = ({ label, name, type }) => {
+export const FormField: React.FC<FormFieldType> = ({
+  label,
+  name,
+  type,
+  placeholder
+}) => {
   const {
     register,
     formState: { errors }
@@ -11,16 +16,22 @@ export const FormField: React.FC<FormFieldType> = ({ label, name, type }) => {
 
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
-      <br />
-      <input
-        {...register(name, { valueAsNumber: type === 'number' })}
-        type={type}
-        name={name}
-        id={name}
-      />
-      <br />
-      {errors[name] ? <span>{errors[name]?.message}</span> : null}
+      <label htmlFor={name} className='text-white text-lg mb-4'>
+        {label}
+      </label>
+      <div className='mt-3 mb-5'>
+        <input
+          {...register(name, { valueAsNumber: type === 'number' })}
+          className='text-white text-lg w-full bg-grey-400 border-grey-300 rounded h-[50px] px-4 text-base focus-visible:outline-0'
+          placeholder={placeholder}
+          type={type}
+          name={name}
+          id={name}
+        />
+        {errors[name] ? (
+          <div className='text-red-500 mt-2'>{errors[name]?.message}</div>
+        ) : null}
+      </div>
     </div>
   )
 }
