@@ -69,7 +69,7 @@ export const Form: React.FC = () => {
         <div className='flex flex-row-reverse'>
           <button
             type='submit'
-            className='h-10 bg-black text-white w-[100px] rounded bg-blue-400'
+            className='h-10 text-white w-[100px] rounded bg-blue-400'
           >
             Add
           </button>
