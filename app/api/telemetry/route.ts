@@ -6,8 +6,8 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 const storageItemBodySchema = z.object({
-  title: z.string(),
-  description: z.string(),
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Description is required'),
   price: z.number().positive('Price should be positive')
 })
 
