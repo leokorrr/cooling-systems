@@ -10,19 +10,19 @@ export const StorageItemsList: React.FC = () => {
   const { data: res, error, isLoading } = useSWR(TELEMETRY_ENDPOINT, swrFetcher)
 
   if (isLoading) {
-    return <div className='text-white max-w-[760px] w-full'>Loading...</div>
+    return <div className='text-white max-w-[760px] w-full px-4'>Loading...</div>
   }
 
   if (error || res?.status === 'fail') {
     return (
-      <div className='text-red-500'>
+      <div className='text-red-500 max-w-[760px] w-full px-4'>
         Something went wrong during loading data. Reload and try again
       </div>
     )
   }
 
   if (res.data.length === 0) {
-    return <div className='text-white max-w-[760px] w-full'>No data</div>
+    return <div className='text-white max-w-[760px] w-full px-4'>No data</div>
   }
 
   return (
