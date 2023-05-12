@@ -6,7 +6,7 @@ import { z } from 'zod'
 const storageItemBodySchema = z.object({
   title: z.string(),
   description: z.string(),
-  price: z.number()
+  price: z.number().positive('Price should be positive')
 })
 
 export async function POST(req: Request) {

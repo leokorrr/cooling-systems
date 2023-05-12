@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FORM_FIELDS } from '@/utils/constants'
 import { swrFetcher } from '@/utils/swrFetcher'
+import { useEffect, useState } from 'react'
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -17,24 +18,43 @@ const formSchema = z.object({
 })
 
 export const Form: React.FC = () => {
+  const [isSubmitError, setIsSubmitError] = useState(false)
+
   const methods = useForm<StorageItemOmitId>({
     resolver: zodResolver(formSchema)
   })
 
-  const { handleSubmit } = methods
+  const { handleSubmit, formState, reset } = methods
 
   const onSubmit: SubmitHandler<StorageItemOmitId> = async (
     data: StorageItemOmitId
   ) => {
-    await swrFetcher('/api/telemetry', {
+    setIsSubmitError(false)
+
+    const res = await swrFetcher('/api/telemetry', {
       method: 'POST',
       body: JSON.stringify(data)
     })
+
+    if (res?.message) {
+      setIsSubmitError(true)
+    }
   }
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful && !isSubmitError) {
+      reset()
+    }
+  }, [reset, formState, isSubmitError])
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='max-w-[760px] px-4'>
+        {isSubmitError ? (
+          <div className='text-red-500 mb-4'>
+            Something went wrong during form submission. Reload and try again
+          </div>
+        ) : null}
         {FORM_FIELDS.map((formField: FormFieldType) => (
           <FormField
             key={formField.name}
