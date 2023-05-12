@@ -12,7 +12,7 @@ const storageItemBodySchema = z.object({
 export async function POST(req: Request) {
   const data = await req.json()
 
-  const validationResult = storageItemBodySchema.safeParse(req.body)
+  const validationResult = storageItemBodySchema.safeParse(data)
 
   if (!validationResult.success) {
     return NextResponse.json({ message: 'Error: Bad payload' }, { status: 400 })
