@@ -2,7 +2,7 @@
 
 import { Form } from '@/components/Form'
 import { StorageItemsList } from '@/components/StorageItemsList'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function Home() {
   const { data: session } = useSession()
@@ -11,7 +11,7 @@ export default function Home() {
     return (
       <div className='w-full flex justify-center mt-5'>
         <button
-          className='bg-red-black text-white h-10 text-white w-[200px] rounded bg-grey-400 border-gray-300'
+          className='text-white h-10 text-white w-[200px] rounded bg-grey-400 border-gray-300'
           onClick={() => signIn()}
         >
           Sign in With Github
