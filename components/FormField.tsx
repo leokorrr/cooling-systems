@@ -1,6 +1,7 @@
 'use client'
 
 import { FormFieldType } from '@/types'
+import { ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export const FormField: React.FC<FormFieldType> = ({
@@ -29,7 +30,7 @@ export const FormField: React.FC<FormFieldType> = ({
           id={name}
         />
         {errors[name] ? (
-          <div className='text-red-500 mt-2'>{errors[name]?.message}</div>
+          <div className='text-red-500 mt-2'>{errors[name]?.message as string}</div>
         ) : null}
       </div>
     </div>
