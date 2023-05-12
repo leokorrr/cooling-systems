@@ -21,7 +21,7 @@ export default function Home() {
   }
 
   return (
-    <main className='flex flex-col w-full justify-center mt-5'>
+    <main className='flex w-full justify-center mt-5'>
       <div className='flex w-full max-w-[1720px] flex-col-reverse md:flex-row'>
         <div className='md:w-[50%] w-full flex justify-center'>
           <StorageItemsList />
