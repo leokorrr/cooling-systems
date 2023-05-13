@@ -15,7 +15,7 @@ jest.mock('next-auth/react', () => {
     __esModule: true,
     ...originalModule,
     useSession: jest.fn(() => {
-      return { data: mockSession, status: 'authenticated' } // return type is [] in v3 but changed to {} in v4
+      return { data: mockSession, status: 'authenticated' }
     })
   }
 })
@@ -78,6 +78,13 @@ describe('App...', () => {
     })
     await userEvent.type(priceInput, '10')
     expect(priceInput).toHaveValue(10)
+  })
+
+  test('should render 1 storage item', () => {
+    renderApp()
+
+    const storageElement = screen.getByTestId('storage-item')
+    expect(storageElement).toBeInTheDocument()
   })
 
   test('error messages should display if nothing is typed', async () => {

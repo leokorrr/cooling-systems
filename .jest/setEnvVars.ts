@@ -1,5 +1,0 @@
-process.env.DATABASE_URL="postgres://postgres:12345@localhost:5432/cooling_systems"
-process.env.GITHUB_ID="900fb2b355b90c3e8d5a"
-process.env.GITHUB_SECRET="53b6a864fa7eab5969f2cec030e732f50d676334"
-process.env.NEXTAUTH_SECRET="XY3HnyDBL0TiFT+3VSGM3eHSxrvbqeeSE+aDl+2qFug="
-process.env.NEXTAUTH_URL="http://localhost:3000"
