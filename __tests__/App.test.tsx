@@ -1,10 +1,9 @@
 import Home from '@/app/page'
 import { Navbar } from '@/components/Navbar'
-import { act, render, screen } from '@testing-library/react'
-import { SessionProvider } from 'next-auth/react'
 import '@testing-library/jest-dom'
-import { useSession } from 'next-auth/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event/'
+import { SessionProvider } from 'next-auth/react'
 
 jest.mock('next-auth/react', () => {
   const originalModule = jest.requireActual('next-auth/react')
@@ -36,7 +35,6 @@ describe('App...', () => {
     const appHeader = screen.getByText(/coolingsystems/i)
     expect(appHeader).toBeInTheDocument()
 
-
     const titleInput = screen.getByRole('textbox', {
       name: /title:/i
     })
@@ -46,7 +44,6 @@ describe('App...', () => {
       name: /description:/i
     })
     expect(descriptionInput).toBeInTheDocument()
-
 
     const priceInput = screen.getByRole('spinbutton', {
       name: /price:/i
@@ -81,5 +78,25 @@ describe('App...', () => {
     })
     await userEvent.type(priceInput, '10')
     expect(priceInput).toHaveValue(10)
+  })
+
+  test('error messages should display if nothing is typed', async () => {
+    userEvent.setup()
+
+    renderApp()
+
+    const addButton = screen.getByRole('button', {
+      name: /add/i
+    })
+    await userEvent.click(addButton)
+
+    const titleEmptyError = screen.getByText(/title is required/i)
+    expect(titleEmptyError).toBeInTheDocument()
+
+    const descriptionEmptyError = screen.getByText(/description is required/i)
+    expect(descriptionEmptyError).toBeInTheDocument()
+
+    const priceEmptyError = screen.getByText(/price is required/i)
+    expect(priceEmptyError).toBeInTheDocument()
   })
 })
