@@ -21,13 +21,13 @@ export const StorageItemsList: React.FC = () => {
     )
   }
 
-  if (res.data.length === 0) {
+  if (res.data?.length === 0) {
     return <div className='text-white max-w-[760px] w-full px-4'>No data</div>
   }
 
   return (
     <div className='max-w-[760px] w-full flex flex-col gap-3 px-4'>
-      {res.data.map((storageItem: StorageItemType) => (
+      {res.data?.map((storageItem: StorageItemType) => (
         <StorageItem
           key={storageItem.id}
           title={storageItem.title}

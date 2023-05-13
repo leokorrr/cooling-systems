@@ -1,6 +1,6 @@
 import Home from '@/app/page'
 import { Navbar } from '@/components/Navbar'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { SessionProvider } from 'next-auth/react'
 import '@testing-library/jest-dom'
 import { useSession } from 'next-auth/react'
@@ -57,5 +57,29 @@ describe('App...', () => {
       name: /add/i
     })
     expect(addButton).toBeInTheDocument()
+  })
+
+  test('user can type', async () => {
+    userEvent.setup()
+
+    renderApp()
+
+    const titleInput = screen.getByRole('textbox', {
+      name: /title:/i
+    })
+    await userEvent.type(titleInput, 'title')
+    expect(titleInput).toHaveValue('title')
+
+    const descriptionInput = screen.getByRole('textbox', {
+      name: /description:/i
+    })
+    await userEvent.type(descriptionInput, 'description')
+    expect(descriptionInput).toHaveValue('description')
+
+    const priceInput = screen.getByRole('spinbutton', {
+      name: /price:/i
+    })
+    await userEvent.type(priceInput, '10')
+    expect(priceInput).toHaveValue(10)
   })
 })
